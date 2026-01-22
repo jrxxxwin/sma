@@ -1,6 +1,4 @@
-let datas = [
-{ date: '2024-06-01', timeIN: 9, timeOUT: 17, hrs: 8 },
-];
+let datas = [];
 
 window.onload = function() {
     renderTable();
