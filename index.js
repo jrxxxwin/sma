@@ -1,7 +1,28 @@
 let datas = [];
+let pastMonthDatas = [];
 
 window.onload = function() {
     renderTable();
+    getDate()   
+}
+const today = new Date();
+const day = today.getDate();
+
+function printPage() {
+    window.print();
+}
+function getDate() {
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
+    let month = months[today.getMonth()];
+    const conta = document.getElementById('monthContainer');
+    conta.innerText = month;
+    
+    if (day <= 15) {
+        conta.innerText += " 1 - 15";
+    } else {
+        conta.innerText += " 16 - 31";
+    }
 }
 function timeStringToFloat(time) {
   var hoursMinutes = time.split(/[.:]/);
@@ -14,20 +35,51 @@ function addEntry() {
     const timeIN = document.getElementById('inTime').value;
     const timeOUT = document.getElementById('outTime').value;
     const hrs = document.getElementById('hours').value;
+    const inpuits = document.querySelectorAll('input');
 
     let Tin = timeStringToFloat(timeIN);
     let Tout = timeStringToFloat(timeOUT);
     let hrss = parseInt(hrs);
 
+    const dateObj = new Date(date);
+
+    
+    //===========================================================
     if (!date || isNaN(Tin) || isNaN(Tout) || isNaN(hrss)) {
         alert("Please fill in all fields correctly.");
         return;
     }
     datas.push({ date, timeIN: Tin, timeOUT: Tout, hrs: hrss });
-    renderTable();
-
+    
     let jsonaray = JSON.stringify(datas);
+
+    if (!!dateObj.valueOf()) {
+        const days = dateObj.getDate();
+
+     
+        if (days <= 15) {
+            // Do nothing
+        } else {
+            alert("Date is not within the current period.");
+            return;
+        }
+    
+        if (days > 15) {
+            // Do nothing
+        } else {
+            alert("Date is not within the current period.");
+            return;
+        }  
+
+        if (days == 15 || days == 31 || days == 30) {
+            pastMonthDatas.push(datas)
+        } 
+    }
+
+    localStorage.setItem("months", JSON.stringify(pastMonthDatas));
     localStorage.setItem("datas", jsonaray);
+    inpuits.forEach(input => input.value = '');
+    window.location.reload();
 }
 function renderTable() {
     const tableBody = document.getElementById('tableBody');
@@ -42,6 +94,9 @@ function renderTable() {
     let salarytotal = 0;
 
     datas.forEach((data, index) => {
+
+        datas.sort((a, b) => new Date(a.date) - new Date(b.date));
+
         let hrsworked
         let hrsworkedFixed
         if (data.timeOUT < data.timeIN) {
@@ -71,9 +126,9 @@ function renderTable() {
             <td>${data.timeOUT.toFixed(2)}</td>
             <td>${hrsworkedFixed}</td>
             <td>${data.hrs}</td>
-            <td>${OT}</td>
+            <td>${OT.toFixed(2)}</td>
             <td>₱${amountFixed}</td>
-            <td><button>Edit</button> <button>Delete</button></td>
+            <td><button onclick="deleteEntrey(${index})">Delete</button></td>
         </tr>`;
         htmlsss += row;
         salarytotal += parseFloat(amountFixed);
@@ -81,4 +136,10 @@ function renderTable() {
     tableBody.innerHTML = htmlsss;
     totalamount.innerText = "₱" +salarytotal.toFixed(2);
     console.log(datas);
+}
+function deleteEntrey(index) {
+    datas.splice(index, 1);
+    let jsonaray = JSON.stringify(datas);
+    localStorage.setItem("datas", jsonaray);
+    window.location.reload();
 }

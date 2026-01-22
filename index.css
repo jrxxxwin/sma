@@ -31,10 +31,19 @@ header h1 {
     border-bottom: 2px solid #4caf50;
     font-weight: bold;
 }
-.main {
+.main{
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
+
+    .title {
+        display: flex;
+        align-items: center;
+
+        h3 {
+            margin-left: auto;
+        }
+    }
 }
 
 table {
@@ -56,7 +65,17 @@ th {
 tfoot {
     th:nth-child(1) {
         text-align: left;
-        padding-left: 4%;
+        padding-left: 20px;
+    }
+    #totalamount {
+        text-align: left;
+        padding-left: 20px;
+    }
+    #btnPrint {
+        display: flex;
+    }
+    button{
+        width: 100%;
     }
 }
 .asd {

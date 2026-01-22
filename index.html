@@ -21,7 +21,11 @@
     </div>
     
     <div class="main">
-        <h2>Work Log</h2>
+        <div class="title">
+            <h2>Work Log</h2>
+            <h3 id="monthContainer"></h3>
+        </div>
+            
         <div class="asd">
             <label>Date: <input type="date" id="date" required></label>
             <label>In Time: <input type="time" id="inTime" required></label>
@@ -48,8 +52,9 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="5">Total</th>
+                    <th colspan="6">Total</th>
                     <th colspan="5" id="totalamount"></th>
+                    <th id="btnPrint"><button onclick="printPage()">Print</button></th>
                 </tr>
             </tfoot>
         </table>
