@@ -56,13 +56,14 @@ function addEntry() {
     if (!!dateObj.valueOf()) {
         const days = dateObj.getDate();
 
-     
+        
+        if (day <= 15) {
         if (days <= 15) {
             // Do nothing
         } else {
             alert("Date is not within the current period.");
             return;
-        }
+        } }
     
         if (days > 15) {
             // Do nothing
