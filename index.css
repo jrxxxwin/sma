@@ -68,7 +68,7 @@ tfoot {
         padding-left: 20px;
     }
     #totalamount {
-        text-align: left;
+        text-align: center;
         padding-left: 20px;
     }
     #btnPrint {
@@ -154,6 +154,17 @@ button:hover {
         section {
             overflow: hidden;
             overflow-x: scroll;
+        }
+        .footer {
+            width: 100%;
+            background: rebeccapurple;
+
+            column-count: 3;
+            tr {
+                th::nth-child(1) {
+                    column-span: 3;
+                }
+            }
         }
     }
 }
