@@ -8,7 +8,6 @@ const monthsFixed = ["January", "February", "March", "April", "May", "June", "Ju
 window.onload = function() {
     renderTable();
     getDate()   
-    renderLastMonth()
 }
 const today = new Date();
 const day = today.getDate();
@@ -45,39 +44,39 @@ function addEntry() {
     let hrss = parseInt(hrs);
 
     const dateObj = new Date(date);
-
-    
     //===========================================================
     if (!date || isNaN(Tin) || isNaN(Tout) || isNaN(hrss)) {
         alert("Please fill in all fields correctly.");
         return;
     }
+    
+    const days = dateObj.getDate();
+    
+    if (day >= 1 && day <= 15) {
+        if (days <= 15 && days >= 1) {} 
+        else {
+            alert("Date is not within current cut-off   ")
+            return
+        }
+    }
+    else if (day >= 16 && day <= 31) {
+        if (days <= 31 && days >= 16) {} 
+        else {
+            alert("Date is not within current cut-off   ")
+            return
+        }
+    }
+
+
+    if (days == 15 || days == 31 || days == 30) {
+        pastMonthDatas.push(datas)
+    } 
+
+
     datas.push({ date, timeIN: Tin, timeOUT: Tout, hrs: hrss });
     
     let jsonaray = JSON.stringify(datas);
 
-    if (!!dateObj.valueOf()) {
-        const days = dateObj.getDate();
-        
-        if (day <= 15) {
-        if (days <= 15) {
-            // Do nothing
-        } else {
-            alert("Date is not within the current period.");
-            return;
-        } }
-    
-        if (days > 15) {
-            // Do nothing
-        } else {
-            alert("Date is not within the current period.");
-            return;
-        }  
-
-        if (days == 15 || days == 31 || days == 30) {
-            pastMonthDatas.push(datas)
-        } 
-    }
     localStorage.setItem("datas", jsonaray);
     inpuits.forEach(input => input.value = '');
     window.location.reload();
