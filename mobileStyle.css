@@ -1,0 +1,96 @@
+@media only screen and (max-width: 600px) {
+    .tabs {
+        display: none;
+    }
+    .tabsM {
+        display: flex;
+    }
+    .tab.active {
+        box-shadow: 0 2px 0 0 #4caf50 ;
+    }
+    .main {
+        padding: 10px;
+
+        .payrollSummary {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto 1fr 1fr;
+
+            h3 {
+                font-size: 15px;
+                grid-area: 1 / 1 / 2 / 3;
+                span {
+                    font-size: 13px;
+                    margin-left: auto;
+                }
+            }
+            section:nth-child(3) {
+                flex-direction: column;
+                align-items: center;
+                grid-area: 2 / 1 / 2 / 3;
+                
+            }
+            section:nth-child(2) {
+                gap: 0;
+                display: flex;
+                justify-content: space-evenly;
+
+                p {
+                    font-size: 12px;
+                    padding: 5px;
+
+                    img {
+                        height: 18px;
+                        width: 18px;
+                    }
+                    span {
+                        font-size: 15px;
+                    }
+                }
+            }
+        }
+        h2 {
+            font-size: 15px;
+            margin-left: 10px;
+        }
+        .asd {
+            display: flex;
+            flex-direction: column;
+            font-size: 12px;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 5px;
+            
+            input {
+                display: grid;
+                width: 80%;
+
+                text-align: center;
+                height: 20px;
+            }
+            button {
+                grid-column: span 2;
+            }
+        }
+        th, td {
+            font-size: 12px;
+        }
+        section {
+            overflow: hidden;
+            overflow-x: scroll;
+        }
+        .footer {
+            width: 100%;
+            background: rebeccapurple;
+
+            column-count: 3;
+            tr {
+                th::nth-child(1) {
+                    column-span: 3;
+                }
+            }
+        }
+    }
+    
+}

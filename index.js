@@ -84,6 +84,9 @@ function addEntry() {
 function renderTable() {
     const tableBody = document.getElementById('tableBody');
     const totalamount = document.getElementById('totalamount');
+    const totalOT = document.getElementById('totalOT')
+    const totalD = document.getElementById('totalD')
+    const totalH = document.getElementById('totalH')
 
     const storedData = localStorage.getItem("datas");
     if (storedData) {
@@ -92,7 +95,10 @@ function renderTable() {
     
     let htmlsss = '';
     let salarytotal = 0;
-
+    let ot = 0;
+    let TD = 0;
+    let TH = 0;
+    
     datas.forEach((data, index) => {
         let {date, timeIN, timeOUT, hrs} = data;
         // let month = monthsFixed[date.split('-')[1]];
@@ -100,6 +106,7 @@ function renderTable() {
 
         let hrsworked
         let hrsworkedFixed
+
         if (timeOUT < timeIN) {
             hrsworked = (timeOUT - 0) + (24 - timeIN) ;
             hrsworkedFixed = parseInt(hrsworked.toFixed(2));
@@ -109,7 +116,6 @@ function renderTable() {
             hrsworkedFixed = parseInt(hrsworked.toFixed(2));
         }
         
-    
         let OT = data.hrs - hrsworked;
         let OTF = OT;
         if (OT < 0) {
@@ -134,15 +140,51 @@ function renderTable() {
         </tr>`;
         htmlsss += row;
         salarytotal += (amountFixed);
+        ot += OTF;
+        TD++
+        TH += hrsworkedFixed
     })
     tableBody.innerHTML = htmlsss;
     totalamount.innerText = "₱" +salarytotal;
+    deductions(salarytotal)
+    totalOT.innerText = ot.toFixed(2)
+    totalD.innerText = TD
+    totalH.innerText = TH.toFixed(2)
+}
+function deductions(salary) {
+    const tot = document.getElementById('totalamounts')
+    
+    const SSS = salary * 0.045
+    const pagIbig = salary * 0.02
+    const pHealth = salary * 0.025
+
+    const estSalary = salary - (SSS + pagIbig + pHealth)
+
+    let icon = `<img src="https://cdn-icons-png.flaticon.com/128/19025/19025308.png" alt="">`
+
+    tot.innerHTML = "₱" + estSalary + icon
 }
 function deleteEntrey(index) {
     datas.splice(index, 1);
     let jsonaray = JSON.stringify(datas);
     localStorage.setItem("datas", jsonaray);
     window.location.reload();
+}
+let collapseStatus = false;
+function collapse() {
+    const container = document.getElementById('workLogTable')
+    const btn = document.getElementById('dropDown')
+
+    if (collapseStatus == false) {
+        container.style.display = "none"
+        btn.classList.add('flipDrop')
+        collapseStatus = true
+    }
+    else {
+        container.style.display = "table"
+        btn.classList.remove('flipDrop')
+        collapseStatus = false
+    }
 }
 
 // function renderLastMonth() {

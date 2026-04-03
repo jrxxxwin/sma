@@ -5,28 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="index.js"></script>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="mobileStyle.css">
     <title>Salary Tracker</title>
   
 </head>
 <body>
     <header>
-        <h1>Salary Tracker</h1>
-        <div>Avatar/Settings</div> <!-- Placeholder for user avatar -->
-    </header>
-    
-    <div class="tabs">
-        <div class="tab active">Dashboard</div>
-        <div class="tab">Work Log</div>
-        <div class="tab">Salary Summary</div>
-    </div>
-    
-    <div class="main">
-        <div class="title">
-            <h2>Work Log</h2>
-            <h3 id="monthContainer"></h3>
+        <img src="/logo.png" alt="">
+        <div class="tabs">
+            <div class="tab active">Dashboard</div>
+            <div class="tab" onclick="window.location.href='worklog.html'">Work Log</div>
+            <div class="tab" onclick="window.location.href='worklog.html'">Salary Summary</div>
         </div>
-            
-        <div class="asd">
+        <div class="asdasd">Avatar/Settings</div> <!-- Placeholder for user avatar -->   
+    </header>
+    <!-- Mobile -->
+    <div class="tabsM">
+        <div class="tab active">Dashboard</div>
+        <div class="tab" onclick="window.location.href='worklog.html'">Work Log</div>
+        <div class="tab" onclick="window.location.href='worklog.html'">Salary Summary</div>
+    </div>
+    <div class="main">
+        <div class="asd dsa">
             <label>Date: <input type="date" id="date" required></label>
             <label>In Time: <input type="time" id="inTime" required></label>
             <label>Out Time: <input type="time" id="outTime" required></label>
@@ -34,10 +34,24 @@
             <button onclick="addEntry()">Add Entry</button>
         </div>
         
+        <div class="payrollSummary">
+            <h3>Payroll Summary <span>(<span id="monthContainer"></span>)</span></h3>
+            <section>
+                <p><img src="https://cdn-icons-png.flaticon.com/128/747/747310.png" alt=""> <span id="totalD">14</span>Total Days</p>
+                <p><img src="https://cdn-icons-png.flaticon.com/128/3884/3884295.png" alt=""> <span id="totalH">70</span>Total Hours</p>
+                <p><img src="https://cdn-icons-png.flaticon.com/128/4915/4915533.png" alt=""> <span id="totalOT">10</span>Hours OT</p>
+            </section>
+            <section>
+                <div>
+                    <h2 id="totalamounts"></h2>
+                    <p>Estimated Salary</p>
+                </div>
+            </section>
+        </div>
         <section>
             <table id="workLogTable">
             <thead>
-                <tr>
+                <tr class="thead">
                     <th>Date</th>
                     <th>In Time</th>
                     <th>Out Time</th>
@@ -59,22 +73,6 @@
             </tfoot>
         </table>
         </section>
-        
-        
-        <table id="salarySummaryTable">
-            <thead>
-                <tr>
-                    <th>Period</th>
-                    <th>Total Hours</th>
-                    <th>Regular Hours</th>
-                    <th>Overtime Hours</th>
-                    <th>Estimated Salary</th>
-                    <th>Breakdown</th>
-                </tr>
-            </thead>
-            <tbody id="pastMonthTable">
-            </tbody>
-        </table>
     </div>
 </body>
 </html>
