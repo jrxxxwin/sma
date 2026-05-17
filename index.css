@@ -14,12 +14,18 @@ header {
     grid-template-columns: 20% 60% 20%;
     justify-content: space-between;
     align-items: center;
-
+    
     img {
         height: 35px;
     }
     .asdasd {
         justify-self: end;
+        display: flex;
+
+        img {
+            height: 35px;
+            align-self: center;
+        }
     }
     h1 {
         margin: 0;
@@ -291,6 +297,46 @@ button:hover {
             width: 15px;
             position: absolute;
             right: -20px;
+        }
+    }
+}
+#summaryContainer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 1000;
+    background-color: #4caf50;
+    height: min-content;
+    width: 300px;
+    border-radius: 7px;
+    grid-template-rows: auto 1fr;
+    transition: all 1s ease-in-out ;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+#highs {
+    font-size: 19px;
+    text-align: center;
+    padding-top: 5px;
+}
+
+#SummaryDetails {
+    background-color: #f5f5f5;
+    padding: 10px 20px;
+    line-height: 10px;
+    border-radius: 0 0 10px 10px;
+
+    p {
+        height: min-content;
+        font-weight: bold;
+        display: grid;
+        grid-template-columns: 75% 1fr;
+        
+        .greenNumber {
+            color: green;
+        }
+        .redNumber {
+            color: red;
         }
     }
 }

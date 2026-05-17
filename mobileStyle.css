@@ -1,6 +1,20 @@
 @media only screen and (max-width: 600px) {
-    .tabs {
-        display: none;
+    header {
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        
+        .tabs {
+            display: none;
+        }
+        .asdasd {
+            display: flex;
+
+            img {
+                height: 35px;
+                align-self: center;
+            }
+        }
     }
     .tabsM {
         display: flex;

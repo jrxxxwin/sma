@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="index.js"></script>
+    <script src="/script/index.js"></script>
+    <script src="/script/pageFunction.js"></script>
+    <script src="/script/renderTables.js"></script>
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="mobileStyle.css">
     <title>Salary Tracker</title>
   
 </head>
-<body>
-    <header>
+<body >
+    <header id="body">
         <img src="/logo.png" alt="">
         <div class="tabs">
             <div class="tab active">Dashboard</div>
             <div class="tab" onclick="window.location.href='worklog.html'">Work Log</div>
             <div class="tab" onclick="window.location.href='worklog.html'">Salary Summary</div>
         </div>
-        <div class="asdasd">Avatar/Settings</div> <!-- Placeholder for user avatar -->   
+        <div class="asdasd" id="menu_dropdown"><img src="https://cdn-icons-png.flaticon.com/128/5358/5358649.png" alt=""></div>   
     </header>
     <!-- Mobile -->
     <div class="tabsM">
@@ -37,13 +39,13 @@
         <div class="payrollSummary">
             <h3>Payroll Summary <span>(<span id="monthContainer"></span>)</span></h3>
             <section>
-                <p><img src="https://cdn-icons-png.flaticon.com/128/747/747310.png" alt=""> <span id="totalD">14</span>Total Days</p>
-                <p><img src="https://cdn-icons-png.flaticon.com/128/3884/3884295.png" alt=""> <span id="totalH">70</span>Total Hours</p>
-                <p><img src="https://cdn-icons-png.flaticon.com/128/4915/4915533.png" alt=""> <span id="totalOT">10</span>Hours OT</p>
+                <p><img src="https://cdn-icons-png.flaticon.com/128/747/747310.png" alt=""> <span id="totalD">0</span>Total Days</p>
+                <p><img src="https://cdn-icons-png.flaticon.com/128/3884/3884295.png" alt=""> <span id="totalH">0</span>Total Hours</p>
+                <p><img src="https://cdn-icons-png.flaticon.com/128/4915/4915533.png" alt=""> <span id="totalOT">0</span>Hours OT</p>
             </section>
             <section>
                 <div>
-                    <h2 id="totalamounts"></h2>
+                    <h2 id="totalamounts">0</h2>
                     <p>Estimated Salary</p>
                 </div>
             </section>
@@ -76,3 +78,4 @@
     </div>
 </body>
 </html>
+
