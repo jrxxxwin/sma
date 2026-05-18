@@ -14,35 +14,35 @@ function collapse() {
         collapseStatus = false
     }
 }
-function SummaryBreakdown() {
-    const popup = document.createElement('div');
-    const subsi = JSON.parse(localStorage.getItem('subsidies'))
-    popup.id  = 'summaryContainer';
+// function SummaryBreakdown() {
+//     const popup = document.createElement('div');
+//     const subsi = JSON.parse(localStorage.getItem('subsidies'))
+//     popup.id  = 'summaryContainer';
 
-    subsi.forEach(element => {
-        let {salary , overTime, SSS, pagIbig, pHealth} = element
-        popup.innerHTML = `
-        <h1 id="highs">Salary Breakdown</h1>
-        <div id="SummaryDetails">
-            <p>Salary: <span class="greenNumber">${salary}</span></p>
-            <p>OverTime rate: <span class="greenNumber">+${overTime.toFixed(2)}</span></p>
-            <p>SSS: <span class="redNumber">-${SSS.toFixed(2)}</span></p>
-            <p>Pag-ibig: <span class="redNumber">-${pagIbig.toFixed(2)}</span></p>
-            <p>PhiHealth: <span class="redNumber">-${pHealth.toFixed(2)}</span></p>
-        </div>
-    `
-    document.body.appendChild(popup);
-    });
+//     subsi.forEach(element => {
+//         let {salary , overTime, SSS, pagIbig, pHealth} = element
+//         popup.innerHTML = `
+//         <h1 id="highs">Salary Breakdown</h1>
+//         <div id="SummaryDetails">
+//             <p>Salary: <span class="greenNumber">${salary}</span></p>
+//             <p>OverTime rate: <span class="greenNumber">+${overTime.toFixed(2)}</span></p>
+//             <p>SSS: <span class="redNumber">-${SSS.toFixed(2)}</span></p>
+//             <p>Pag-ibig: <span class="redNumber">-${pagIbig.toFixed(2)}</span></p>
+//             <p>PhiHealth: <span class="redNumber">-${pHealth.toFixed(2)}</span></p>
+//         </div>
+//     `
+//     document.body.appendChild(popup);
+//     });
 
-    // 3. Handle fade-out animation sequence
-    setTimeout(() => {
-        popup.style.opacity = '0';
-    }, 3500);
+//     // 3. Handle fade-out animation sequence
+//     setTimeout(() => {
+//         popup.style.opacity = '0';
+//     }, 3500);
 
-    setTimeout(() => {
-        popup.remove();
-    }, 4000);
-}
+//     setTimeout(() => {
+//         popup.remove();
+//     }, 4000);
+// }
 function printPage() {
     window.print();
 }
@@ -73,7 +73,7 @@ function deleteEntry(dateToDelete, monthKey) {
     window.location.reload();
 }
 var open = false
-function menuDown() {
-    const headerD = document.getElementById('body')
-    headerD.classList.toggle('is-open')
-}
+// function menuDown() {
+//     const headerD = document.getElementById('body')
+//     headerD.classList.toggle('is-open')
+// }

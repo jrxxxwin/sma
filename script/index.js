@@ -6,12 +6,9 @@ const salaryRate = 71.35;
 const OTrate = salaryRate * 1.25
 
 window.onload = function() {
-    // localStorage.clear('monthlyRecord')
-    let sdsa = JSON.parse(localStorage.getItem('monthlyRecord'))
     console.log(sdsa)
     renderTable();
     getDate()   
-    // autoSummary()
 }
 
 const today = new Date();

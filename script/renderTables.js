@@ -37,6 +37,9 @@ function toHours(decimalTime) {
 }
 var ratePerHour = 71.35
 var i = 0
+
+let nightdiff = 0
+
 function renderTable() {
     const tableBody = document.getElementById('tableBody');
     const totalamount = document.getElementById('totalamount');
@@ -110,11 +113,7 @@ function renderTable() {
             nightdiff
         }
         
-//$$\text{Pay} = 71.35 \times 1.00 \times 4 = \mathbf{₱285.40}$$
-//$$\text{Pay} = 71.35 \times 1.10 \times 4 = \mathbf{₱313.94}$$
-//$$\text{Pay} = 71.35 \times 1.375 \times 2 = \mathbf{₱196.2125}$$
-//$$\text{Total Daily Salary} = 285.40 + 313.94 + 196.2125 = \mathbf{₱795.5525}$$  
-        console.log("hrsworked: "  + String(hrsworked) +  "    hrsworked_without_nightdiff: " + String(hrsworked_without_nightdiff) + "    nightdiff: " + String(nightdiff) + "  actualOT:   " + String(actualOT) +  "  nightDiffPLusOT:   " + String(nightDiffPLusOT) )
+        // console.log("hrsworked: "  + String(hrsworked) +  "    hrsworked_without_nightdiff: " + String(hrsworked_without_nightdiff) + "    nightdiff: " + String(nightdiff) + "  actualOT:   " + String(actualOT) +  "  nightDiffPLusOT:   " + String(nightDiffPLusOT) )
 
         let accurateValue = 0
 
@@ -169,7 +168,7 @@ function renderTable() {
     
 })
 }
-let nightdiff = 0
+
 function getDecimalNightDiff(start, end) {
     if (end < start) {
         end += 24; 
