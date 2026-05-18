@@ -6,7 +6,6 @@ const salaryRate = 71.35;
 const OTrate = salaryRate * 1.25
 
 window.onload = function() {
-    console.log(sdsa)
     renderTable();
     getDate()   
 }
