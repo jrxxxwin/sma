@@ -35,7 +35,7 @@ function toHours(decimalTime) {
     }
     
 }
-var ratePerHour = 71.35
+var ratePerHour = 75
 var i = 0
 
 let nightdiff = 0
