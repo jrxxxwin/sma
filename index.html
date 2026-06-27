@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/script/index.js"></script>
-    <script src="/script/pageFunction.js"></script>
-    <script src="/script/renderTables.js"></script>
-    <link rel="stylesheet" href="/style/index.css">
-    <link rel="stylesheet" href="/style/mobileStyle.css">
-    <link rel="stylesheet" href="/style/mainMenu.css">
+    <script src="script/index.js"></script>
+    <script src="script/pageFunction.js"></script>
+    <script src="script/renderTables.js"></script>
+    <link rel="stylesheet" href="style/index.css">
+    <link rel="stylesheet" href="style/mobileStyle.css">
+    <link rel="stylesheet" href="style/mainMenu.css">
     <title>Salary Tracker</title>
   
 </head>
 <body>
     <header>
-        <img src="/components/icons/logo.png" alt="">
+        <img src="components/icons/logo.png" alt="">
         <div class="tabs">
             <div class="tab active">Dashboard</div>
             <div class="tab" onclick="window.location.href='salarySummary.html'">Salary Summary</div>
         </div>
-        <div class="asdasd" id="menu_dropdown"><img src="/components/icons/menu.png" alt="" onclick="active()"></div>   
+        <div class="asdasd" id="menu_dropdown"><img src="components/icons/menu.png" alt="" onclick="active()"></div>   
     </header>
     
     <!-- Mobile -->
@@ -28,9 +28,9 @@
             <div class="menuContainer">    
                 <section>
                     <label for="">User Profile</label>
-                    <a href="" class="menuOption"><img src="/components/icons/calendar.png" alt="">Account</a>
+                    <a href="" class="menuOption"><img src="components/icons/calendar.png" alt="">Account</a>
                     <details class="menuOption">
-                        <summary><img src="/components/icons/calendar.png" alt="">Settings</summary>
+                        <summary><img src="components/icons/calendar.png" alt="">Settings</summary>
                         <ul>
                             <li>123</li>
                             <li>123</li>
@@ -40,10 +40,10 @@
                 </section>
                 <section>
                     <label for="">Information & Help</label>
-                    <a href="" class="menuOption"><img src="/components/icons/calendar.png" alt="">Support</a>
-                    <a href="" class="menuOption"><img src="/components/icons/calendar.png" alt="">About</a>
+                    <a href="" class="menuOption"><img src="components/icons/calendar.png" alt="">Support</a>
+                    <a href="" class="menuOption"><img src="components/icons/calendar.png" alt="">About</a>
                 </section>
-                <a href="" class="menuOption"><img src="/components/icons/calendar.png" alt=""> Logout</a>
+                <a href="" class="menuOption"><img src="components/icons/calendar.png" alt=""> Logout</a>
             </div>
         </div>
         <div class="tab active">Dashboard</div>
@@ -79,9 +79,9 @@
                 </div>
             </section>
             <section class="salaryDetailsSection">
-                <p><img src="/components/icons/calendar.png" alt=""> <span id="totalD">0</span>Days</p>
-                <p><img src="/components/icons/clock.png" alt=""> <span id="totalH">0</span>Hours</p>
-                <p><img src="/components/icons/overtime.png" alt=""> <span id="totalOT">0</span>Overtime</p>
+                <p><img src="components/icons/calendar.png" alt=""> <span id="totalD">0</span>Days</p>
+                <p><img src="components/icons/clock.png" alt=""> <span id="totalH">0</span>Hours</p>
+                <p><img src="components/icons/overtime.png" alt=""> <span id="totalOT">0</span>Overtime</p>
             </section>
         </div>
 
@@ -117,8 +117,8 @@
     let mainMenuActive = false
     let mainoverlay = false
     let menu = document.getElementById('menu_dropdown')
-    let menuDefault = `<img src="/components/icons/menu.png" alt="" onclick="active()">`
-    let menuExit = `<img src="/components/icons/menu.png" alt="" onclick="active()">`
+    let menuDefault = `<img src="components/icons/menu.png" alt="" onclick="active()">`
+    let menuExit = `<img src="components/icons/menu.png" alt="" onclick="active()">`
     function active() {
         
         let menu = document.getElementById('menu_dropdown')
