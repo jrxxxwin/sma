@@ -96,7 +96,7 @@ function deductions(salary, OT) {
         estSalary = 0
     }
 
-    let icon = `<img src="/components/icons/calendar.png" onclick='SummaryBreakdown()'>`
+    let icon = `<img src="components/icons/calendar.png" onclick='SummaryBreakdown()'>`
     tot.innerHTML = "₱" + estSalary.toFixed(2) + icon
     
     const summart = []

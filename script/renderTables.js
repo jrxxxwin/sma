@@ -90,11 +90,6 @@ function calculateHrsValue(hours, nightdiff, timeIN, timeOUT, workType) {
     overTime = overTime.toFixed(2)
     return {salary, overTime}
 }
-
-var ratePerHour = 75
-var i = 0
-let nightdiff = 0
-
 function renderTable() {
     const tableBody = document.getElementById('tableBody');
     const totalamount = document.getElementById('totalamount');
