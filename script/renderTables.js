@@ -197,22 +197,22 @@ function getDecimalNightDiff(start, end) {
     }
     return nightHours
 }
-function doublePayNextDay(index, timeOUT) {
-    let data = JSON.parse(localStorage.getItem('monthlyRecord'))
-    let asd = index + 1
-    let allItems = Object.values(data).flat()
-    let checkTom = allItems.find(b => b.indexID === asd)
-    let asjd = checkTom ? checkTom.workType : false
-    let start = 24
-    timeOUT = timeOUT < 24 ? timeOUT + 24 : timeOUT
-    if(timeOUT > 24) {
-        switch(asjd) {
-            case 'RH': {
-                let Thours = timeOUT - start
-                return 
-                break
-            }
-        }
-    }
+// function doublePayNextDay(index, timeOUT) {
+//     let data = JSON.parse(localStorage.getItem('monthlyRecord'))
+//     let asd = index + 1
+//     let allItems = Object.values(data).flat()
+//     let checkTom = allItems.find(b => b.indexID === asd)
+//     let asjd = checkTom ? checkTom.workType : false
+//     let start = 24
+//     timeOUT = timeOUT < 24 ? timeOUT + 24 : timeOUT
+//     if(timeOUT > 24) {
+//         switch(asjd) {
+//             case 'RH': {
+//                 let Thours = timeOUT - start
+//                 return 
+//                 break
+//             }
+//         }
+//     }
     
-}
+// }
