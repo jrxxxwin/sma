@@ -1,26 +1,22 @@
-let monthlyRecord = {};
-let pastMonthDatas = {};
-
 const monthsFixed = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const salaryRate = 71.35;
-const OTrate = salaryRate * 1.25
-
-window.onload = function() {
-    renderTable();
-    getDate()   
-}
-
 const today = new Date();
 const day = today.getDate();
-const month = today.getMonth();
+const month = today.getMonth() + 1;
 const year = today.getFullYear();
-const tomorrow = new Date(today);
-tomorrow.setDate(today.getDate() + 1);
+let payday1, payday2, nightdiff = 0
+let monthlyRecord = {};
+let storedMonth = {};
+var ratePerHour = 75
 
+window.onload = function() {
+    renderTable()
+    getDate()   
+    autoLogPerMonth()
+}
 function getDate() {
-    let month = monthsFixed[today.getMonth()];
+    let months = monthsFixed[today.getMonth()];
     const conta = document.getElementById('monthContainer');
-    conta.innerText = month;
+    conta.innerText = months;
     
     if (day <= 15) {
         conta.innerText += " 1 - 15";
@@ -28,29 +24,6 @@ function getDate() {
         conta.innerText += " 16 - 31";
     }
 }
-// function autoSummary() {
-//     if(day == 15 || tomorrow.getDate() === 1) {
-//         // 1. Get data from both the source and destination
-//         const oldMonth = localStorage.getItem("datas");
-//         const monthHistory = localStorage.getItem("pastMonthDatas");
-
-//         // 2. Only proceed if there is actually data to transfer
-//         if (sourceRaw) {
-//         // Convert both items from strings back into JavaScript arrays
-//         const sourceArray = JSON.parse(oldMonth);
-//         const destinationArray = monthHistory ? JSON.parse(monthHistory) : {};
-
-//         // 3. Combine both arrays together using the spread operator
-//         const mergedArray = [...destinationArray, ...sourceArray];
-
-//         // 4. Save the combined list back to the destination key
-//         localStorage.setItem("monthHistory", JSON.stringify(mergedArray));
-
-//         // 5. Delete the old key so you don't duplicate data later
-//         localStorage.removeItem("oldMonth");
-//         }
-//     } 
-// }
 function timeStringToFloat(time) {
   var hoursMinutes = time.split(/[.:]/);
   var hours = parseInt(hoursMinutes[0], 10);
@@ -61,24 +34,22 @@ function addEntry() {
     const date = document.getElementById('date').value;
     const timeIN = document.getElementById('inTime').value;
     const timeOUT = document.getElementById('outTime').value;
-    const hrs = document.getElementById('hours').value;
     const inpuits = document.querySelectorAll('input');
+    const types = document.getElementById('workType').value
     
     let Tin = timeStringToFloat(timeIN);
     let Tout = timeStringToFloat(timeOUT);
-    let hrss = parseInt(hrs);
     let currentMonth = String(month)
 
     const dateObj = new Date(date);
     //===========================================================
-    if (!date || isNaN(Tin) || isNaN(Tout) || isNaN(hrss)) {
+    if (!date || isNaN(Tin) || isNaN(Tout)) {
         alert("Please fill in all fields correctly.");
         return;
     }
-
+    let datePar = date.replaceAll('-', '')
     const days = dateObj.getDate();
-    let indexid = String(year) + currentMonth + String(days)
-    let indexID = parseInt(indexid)
+    let indexID = parseInt(datePar)
     
     if (day >= 1 && day <= 15) {
         currentMonth = currentMonth + 1 
@@ -97,42 +68,117 @@ function addEntry() {
         }
     }
 
-    // if (days == 15 || days == 31 || days == 30) {
-    //     pastMonthDatas[currentMonth].push(datas)
-    // } 
     const checkThisMonth = localStorage.getItem('monthlyRecord');
     const verifyThisMonth = checkThisMonth ? JSON.parse(checkThisMonth) : {};
 
     if (!verifyThisMonth[currentMonth]) {
         verifyThisMonth[currentMonth] = []
-        verifyThisMonth[currentMonth].push({ indexID, date, timeIN: Tin, timeOUT: Tout, hrs: hrss });
+        verifyThisMonth[currentMonth].push({ indexID, date, timeIN: Tin, timeOUT: Tout, workType: types});
     }
     else {
-        verifyThisMonth[currentMonth].push({ indexID, date, timeIN: Tin, timeOUT: Tout, hrs: hrss });
+        verifyThisMonth[currentMonth].push({ indexID, date, timeIN: Tin, timeOUT: Tout, workType: types});
     }
-
     localStorage.setItem('monthlyRecord', JSON.stringify(verifyThisMonth));
     inpuits.forEach(input => input.value = '');
     window.location.reload();
-    // console.log(verifyThisMonth)
 }
 function deductions(salary, OT) {
     const tot = document.getElementById('totalamounts')
     
     if (OT )
-    var overTime = (71.35 * 1.25) * OT
-    const SSS = salary * 0.045
-    const pagIbig = salary * 0.02
-    const pHealth = salary * 0.025
+    var overTime = (ratePerHour * 1.25) * OT
+    const SSS = 250
+    const pagIbig = salary * 0.01
+    const pHealth = 250
 
-    const estSalary = salary - (SSS + pagIbig + pHealth)
+    var estSalary = salary - (SSS + pagIbig + pHealth)
+    if(salary == 0 ){
+        estSalary = 0
+    }
 
-    let icon = `<img src="https://cdn-icons-png.flaticon.com/128/19025/19025308.png" onclick='SummaryBreakdown()'>`
-
-    tot.innerHTML = "₱" + estSalary + icon
+    let icon = `<img src="/components/icons/calendar.png" onclick='SummaryBreakdown()'>`
+    tot.innerHTML = "₱" + estSalary.toFixed(2) + icon
     
     const summart = []
     summart.push({salary , overTime, SSS, pagIbig, pHealth})
     localStorage.setItem('subsidies', JSON.stringify(summart))
 }
+function salaryMultiplier(timeIN, timeOUT, workType) {
+    
+    let salaryFOR = 0
+    let mul = 0
 
+    if(timeOUT < timeIN) {
+        timeOUT += 24
+    }
+
+    if(timeOUT > 24) {
+        timeOUT = 24
+    }
+
+    let hoursWorked = timeOUT - timeIN
+
+    switch(workType) {
+        case "RH" : {
+                salaryFOR = (hoursWorked * ratePerHour) * 2
+                mul = 2
+            break
+        }
+        case "SND" || "RD" : {
+                salaryFOR = (hoursWorked * ratePerHour) * 1.30
+                mul = 1.30
+            break
+        }
+        case "RHRD" : {
+                salaryFOR = (hoursWorked * ratePerHour) * 2.60
+                mul = 2.60
+            break
+        }
+        case "SNDRD" : {
+                salaryFOR = (hoursWorked * ratePerHour) * 1.5
+                mul = 1.5
+            break
+        }
+    }
+    return {salaryFOR, hoursWorked, mul}
+}
+function autoLogPerMonth() {
+    let tom = new Date()
+    tom.setDate(tom.getDate() + 1)
+    tom = tom.getDate()
+
+    let currentMonth = JSON.parse(localStorage.getItem('monthlyRecord')) || {}
+    let storedMonth = JSON.parse(localStorage.getItem('storedMonth')) || {}
+
+    if(tom === payday1 || tom === payday2) {
+        let newStoredMonth = {...currentMonth,...storedMonth}
+        localStorage.setItem("storedMonth", JSON.stringify(newStoredMonth))
+        localStorage.removeItem('monthlyRecord')
+    }
+}
+function overlapNDiffOT(start1, end1, start2, end2) {
+    if (end1 < start1) end1 += 24;
+    if (end2 < start2) end2 += 24;
+    const startOverlap = Math.max(start1, start2);
+    const endOverlap = Math.min(end1, end2);
+    return Math.max(0, endOverlap - startOverlap);
+}
+function overlapNDiffReg(start1, end1) {
+    let start2 = 22
+    let end2 = 6
+
+    if (end1 < start1) end1 += 24;
+    if (end2 < start2) end2 += 24;
+    
+    // const startOverlap = Math.max(start1, start2);
+    // const endOverlap = Math.min(end1, end2);
+    let overlapDiffReg = 0
+
+    
+    if (start1 < 6) {
+        let earlyOverlapStart = Math.max(start1, -2);
+        let earlyOverlapEnd = Math.min(end1, 6);
+        overlapDiffReg += Math.max(0, earlyOverlapEnd - earlyOverlapStart);
+    }
+    return overlapDiffReg
+}

@@ -35,11 +35,61 @@ function toHours(decimalTime) {
     }
     
 }
-var ratePerHour = 71.35
-var i = 0
-
-let nightdiff = 0
-
+function calculateHrsValue(hours, nightdiff, timeIN, timeOUT, workType) {
+    let overTime, nightDiffwithOT, regularHrs, salary, Ndiff = 0
+    //overtime
+    overTime = hours > 8 ? hours - 8 : 0
+    //regularhrs
+    regularHrs = getDecimalRegularhour(timeIN, timeOUT)
+    //nightDiff with OT 
+    let thisd = overlapNDiffOT(timeIN + 8, timeOUT, 22, 6)
+    let nightDiffwithReg = overlapNDiffReg(timeIN, timeOUT)
+    nightDiffwithOT = hours > 8 ? thisd : 0
+    //nightDiff
+    Ndiff = nightDiffwithOT > 0 ? (nightdiff > nightDiffwithOT ? nightdiff - nightDiffwithOT : nightDiffwithOT - nightdiff) : nightdiff
+    //into total value 
+    if(workType === "RG") {
+        if(Ndiff > 0) {
+            if(nightDiffwithOT > 0) {
+                overTime -= nightDiffwithOT
+            }
+            if(regularHrs > 0 && nightDiffwithReg > 0) {
+                regularHrs = 8
+                salary = (regularHrs * ratePerHour) + (nightDiffwithReg *  (ratePerHour * 0.1)) + (((ratePerHour *( 0.1 + 1.25)) * nightDiffwithOT)) + ((ratePerHour * 1.25) * overTime)
+            }
+            else {
+                salary = (regularHrs * ratePerHour) + (Ndiff *  (ratePerHour * 1.1)) + (((ratePerHour *( 0.1 + 1.25)) * nightDiffwithOT)) + ((ratePerHour * 1.25) * overTime)
+            }
+            //console.log("Dpay Hours: " + hours + ", regHrs: " + regularHrs + ", nightDiff: " + Ndiff + ", overTime: " + overTime + ", nightDiffwOT: " + nightDiffwithOT)
+        }
+        else {
+            salary = (regularHrs * ratePerHour) + ((ratePerHour * 0.25) * overTime)
+        }
+    }
+    else {
+        let {salaryFOR, hoursWorked, mul} = salaryMultiplier(timeIN, timeOUT, workType)
+        // console.log("Dpay Hours: " + hoursWorked + ", regHrs: " + regularHrs + ", nightDiff: " + Ndiff + ", overTime: " + overTime + ", nightDiffwOT: " + nightDiffwithOT)
+        if(regularHrs < hoursWorked) {
+            restHours = hoursWorked - regularHrs
+            mul = "0." + mul
+            if(Ndiff < 3) {
+                salary = salaryFOR + ((ratePerHour * mul) * Ndiff) + (((ratePerHour * 1.1) * 1.25) * nightDiffwithOT)
+            }
+            else if (Ndiff > 3) {
+                let newNightDiff = Ndiff - 2
+                salary = salaryFOR + ((ratePerHour * mul) * 2) + ((ratePerHour * 1.1) * newNightDiff) + (((ratePerHour * 1.1) * 1.25) * nightDiffwithOT)
+            }
+            else if(Ndiff = 0 || overTime > 0) {
+                salary = salaryFOR + ((ratePerHour * 0.25) * overTime)
+            }
+        }
+        else {
+            salary = salaryFOR + ((ratePerHour * 0.25) * overTime)
+        }
+    }
+    overTime = overTime.toFixed(2)
+    return {salary, overTime}
+}
 function renderTable() {
     const tableBody = document.getElementById('tableBody');
     const totalamount = document.getElementById('totalamount');
@@ -50,27 +100,22 @@ function renderTable() {
     const thisMonth = localStorage.getItem('monthlyRecord')
     const datas = (thisMonth && thisMonth.trim() !== "") ? JSON.parse(thisMonth) : {};
     
+   
     let htmlsss = '';
     let salarytotal = 0;
-    let ot = 0;
-    let TOTALot = 0;
-    let TOTALhours = 0;
+    let TOTALot, TOTALhours, ot = 0;
     let TD = 0;
     let TH = 0;
-    let con = 0
-    let index = 0
 
+    // console.log(datas)
     Object.entries(datas).forEach(([months, dataArray]) => { 
 
-        dataArray.forEach(({ indexID, date, timeIN, timeOUT, hrs}) => {
-
-        getDecimalNightDiff(timeIN, timeOUT)
-
+        dataArray.forEach(({ indexID, date, timeIN, timeOUT, hrs, workType}) => {
+        let nightdiff =  getDecimalNightDiff(timeIN, timeOUT)
+         doublePayNextDay(indexID, timeOUT)
         dataArray.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-        
         let hrsworkedFixed = 0
-
         if (timeOUT < timeIN) {
             hrsworkedFixed = (timeOUT - 0) + (24 - timeIN) ;  
         }
@@ -78,97 +123,61 @@ function renderTable() {
             hrsworkedFixed = timeOUT - timeIN;
         }
         let hrsworked = hrsworkedFixed
-        // console.log(nightdiff)
-
-        let actualOT = 0
-        let nightDiffPLusOT = 0
-        let hrsworked_without_nightdiff = 0
-
-        hrsworked_without_nightdiff = hrsworked - nightdiff
-
-        if(hrsworked >= 8) {
-            actualOT = hrsworked - 8
-            
-
-            if(nightdiff == 1 || actualOT == 1) {
-                nightDiffPLusOT = 1
-            }
-            else {
-                if (actualOT == 0) {
-                    nightDiffPLusOT = actualOT
-                } 
-                else {
-                    if (actualOT < 1) {
-                        nightDiffPLusOT = 1 - actualOT 
-                    }
-                    else {
-                        nightdiff = nightdiff - actualOT
-                        nightDiffPLusOT = nightdiff - actualOT 
-                    }
-                }     
-            }
+        if(workType === undefined) {
+            workType = "RG"
         }
-        else if(hrsworked < 8) {
-            actualOT = 0
-            nightdiff
-        }
-        
-        // console.log("hrsworked: "  + String(hrsworked) +  "    hrsworked_without_nightdiff: " + String(hrsworked_without_nightdiff) + "    nightdiff: " + String(nightdiff) + "  actualOT:   " + String(actualOT) +  "  nightDiffPLusOT:   " + String(nightDiffPLusOT) )
-
-        let accurateValue = 0
-
-        if(!nightDiffPLusOT > 0) {
-            accurateValue = (hrsworked_without_nightdiff * ratePerHour) + ((ratePerHour * 1.10) * nightdiff) + ((ratePerHour * 1.25) * actualOT)
-        }
-        else {
-            accurateValue = (hrsworked_without_nightdiff * ratePerHour) + ((ratePerHour * 1.10) * nightdiff) + ((ratePerHour * 1.375) * nightDiffPLusOT)
-        }
-        let amount = (hrsworked * ratePerHour) + ((ratePerHour * 0.25) * actualOT)
-        let amountFixed = parseInt(accurateValue.toFixed(2));
+        let {salary, overTime} = calculateHrsValue(hrsworked, nightdiff, timeIN, timeOUT, workType)
 
         let TIMEin = toMilitaryTime(timeIN)
         let TIMEout = toMilitaryTime(timeOUT)
-        let TIMEot = toHours(actualOT)
-        let TimeOT = 0
+        let TIMEot = toHours(overTime)
 
-        if (actualOT == 0) {
-            TimeOT
-        }
-        else {
-            TimeOT = TIMEot.replace(/^0+/, '')
-        }
-        
         let TOTALhrs = toHours(hrsworkedFixed).replace(/^0+/, '')
 
         const row = `<tr>
-            <td>${date}</td>
+            <td>${indexID}</td>
             <td>${TIMEin}</td>
             <td>${TIMEout}</td>
             <td>${TOTALhrs}</td>
-            <td>${hrs}</td>
-            <td>${actualOT}</td>
-            <td>₱${amountFixed}</td>
+            <td>${overTime}</td>
+            <td>₱${salary.toFixed(2)}</td>
             <td><button onclick="deleteEntry(${indexID}, ${months})">Delete</button></td>
         </tr>`;
         htmlsss += row;
-        salarytotal += (amountFixed);
-        ot += actualOT;
+        salarytotal += (salary);
+        ot += parseInt(overTime)
         TOTALot = toHours(ot).replace(/^0+/, '')
         TD++
         TH += hrsworkedFixed
         TOTALhours = toHours(TH).replace(/^0+/, '')
     })
-    tableBody.innerHTML = htmlsss;
-    totalamount.innerText = "₱" +salarytotal;
     deductions(salarytotal, ot)
-    totalOT.innerText = TOTALot
+    tableBody.innerHTML = htmlsss;
+    totalamount.innerText = "₱" + salarytotal.toFixed(2);
+    totalOT.innerText = TOTALot === undefined ? 0 : (TOTALot == 0 ? 0 : TOTALot)
     totalD.innerText = TD
-    totalH.innerText = TOTALhours
-
-    
+    totalH.innerText = TOTALhours === undefined ? 0 : TOTALhours
 })
 }
+function getDecimalRegularhour(start, end) {
+    if (end < start) {
+        end += 24; 
+    }
 
+    let ndStart = 6;
+    let ndEnd = 22;
+
+    let overlapStart = Math.max(start, ndStart);
+    let overlapEnd = Math.min(end, ndEnd);
+    let regularHOURS = Math.max(0, overlapEnd - overlapStart);
+
+    if (start > 6) {
+        let earlyOverlapStart = Math.max(start, 0);
+        let earlyOverlapEnd = Math.min(end, 6);
+        regularHOURS += Math.max(0, earlyOverlapEnd - earlyOverlapStart);
+    }
+    return regularHOURS
+}
 function getDecimalNightDiff(start, end) {
     if (end < start) {
         end += 24; 
@@ -186,5 +195,24 @@ function getDecimalNightDiff(start, end) {
         let earlyOverlapEnd = Math.min(end, 6);
         nightHours += Math.max(0, earlyOverlapEnd - earlyOverlapStart);
     }
-     return nightdiff  = nightHours
+    return nightHours
+}
+function doublePayNextDay(index, timeOUT) {
+    let data = JSON.parse(localStorage.getItem('monthlyRecord'))
+    let asd = index + 1
+    let allItems = Object.values(data).flat()
+    let checkTom = allItems.find(b => b.indexID === asd)
+    let asjd = checkTom ? checkTom.workType : false
+    let start = 24
+    timeOUT = timeOUT < 24 ? timeOUT + 24 : timeOUT
+    if(timeOUT > 24) {
+        switch(asjd) {
+            case 'RH': {
+                let Thours = timeOUT - start
+                return 
+                break
+            }
+        }
+    }
+    
 }

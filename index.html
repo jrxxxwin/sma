@@ -3,78 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="script/index.js"></script>
-    <script src="script/pageFunction.js"></script>
-    <script src="script/renderTables.js"></script>
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="mobileStyle.css">
+    <script src="/script/index.js"></script>
+    <script src="/script/pageFunction.js"></script>
+    <script src="/script/renderTables.js"></script>
+    <link rel="stylesheet" href="/style/index.css">
+    <link rel="stylesheet" href="/style/mobileStyle.css">
+    <link rel="stylesheet" href="/style/mainMenu.css">
     <title>Salary Tracker</title>
   
 </head>
-<body >
+<body>
     <header>
-        <img src="logo.png" alt="">
+        <img src="/components/icons/logo.png" alt="">
         <div class="tabs">
             <div class="tab active">Dashboard</div>
-            <div class="tab" onclick="window.location.href='worklog.html'">Work Log</div>
-            <div class="tab" onclick="window.location.href='worklog.html'">Salary Summary</div>
+            <div class="tab" onclick="window.location.href='salarySummary.html'">Salary Summary</div>
         </div>
-        <div class="asdasd" id="menu_dropdown"><img src="https://cdn-icons-png.flaticon.com/128/5358/5358649.png" alt=""></div>   
+        <div class="asdasd" id="menu_dropdown"><img src="/components/icons/menu.png" alt="" onclick="active()"></div>   
     </header>
+    
     <!-- Mobile -->
     <div class="tabsM">
+        <div class="mainMenu">
+            <div class="menuContainer">    
+                <section>
+                    <label for="">User Profile</label>
+                    <a href="" class="menuOption"><img src="/components/icons/calendar.png" alt="">Account</a>
+                    <details class="menuOption">
+                        <summary><img src="/components/icons/calendar.png" alt="">Settings</summary>
+                        <ul>
+                            <li>123</li>
+                            <li>123</li>
+                            <li>123</li>
+                        </ul>
+                    </details>
+                </section>
+                <section>
+                    <label for="">Information & Help</label>
+                    <a href="" class="menuOption"><img src="/components/icons/calendar.png" alt="">Support</a>
+                    <a href="" class="menuOption"><img src="/components/icons/calendar.png" alt="">About</a>
+                </section>
+                <a href="" class="menuOption"><img src="/components/icons/calendar.png" alt=""> Logout</a>
+            </div>
+        </div>
         <div class="tab active">Dashboard</div>
-        <div class="tab" onclick="window.location.href='worklog.html'">Work Log</div>
-        <div class="tab" onclick="window.location.href='worklog.html'">Salary Summary</div>
+        <div class="tab" onclick="window.location.href='salarySummary.html'">Salary Summary</div>
     </div>
-    <div class="main">
+
+    <div class="main">  
         <div class="asd dsa">
-            <label>Date: <input type="date" id="date" required></label>
-            <label>In Time: <input type="time" id="inTime" required></label>
-            <label>Out Time: <input type="time" id="outTime" required></label>
-            <label>Expected Hours: <input type="text" id="hours" required placeholder="e.g., 7hrs"></label>
+            <div class="addSectionContainer">
+                <label>Date: <input type="date" id="date" required></label>
+                <label>In Time: <input type="time" id="inTime" required></label>
+                <label>Out Time: <input type="time" id="outTime" required></label>
+                <label>Work Type: 
+                    <select name="" id="workType">
+                        <option value="RG">Regular Day</option>
+                        <option value="RH">Regular Holiday</option>
+                        <option value="SND">Special Non-Working Day</option>
+                        <option value="RD">Rest Day</option>
+                        <option value="RHRD">Regular Holiday + Rest Day</option>
+                        <option value="SNDRD">Special Non-Working Day + Rest Day</option>
+                    </select>
+                </label>
+            </div>
             <button onclick="addEntry()">Add Entry</button>
         </div>
         
         <div class="payrollSummary">
             <h3>Payroll Summary <span>(<span id="monthContainer"></span>)</span></h3>
-            <section>
-                <p><img src="https://cdn-icons-png.flaticon.com/128/747/747310.png" alt=""> <span id="totalD">0</span>Total Days</p>
-                <p><img src="https://cdn-icons-png.flaticon.com/128/3884/3884295.png" alt=""> <span id="totalH">0</span>Total Hours</p>
-                <p><img src="https://cdn-icons-png.flaticon.com/128/4915/4915533.png" alt=""> <span id="totalOT">0</span>Hours OT</p>
-            </section>
-            <section>
+            <section class="salaryContainer">
                 <div>
                     <h2 id="totalamounts">0</h2>
                     <p>Estimated Salary</p>
                 </div>
             </section>
+            <section class="salaryDetailsSection">
+                <p><img src="/components/icons/calendar.png" alt=""> <span id="totalD">0</span>Days</p>
+                <p><img src="/components/icons/clock.png" alt=""> <span id="totalH">0</span>Hours</p>
+                <p><img src="/components/icons/overtime.png" alt=""> <span id="totalOT">0</span>Overtime</p>
+            </section>
         </div>
+
         <section>
             <table id="workLogTable">
-            <thead>
-                <tr class="thead">
-                    <th>Date</th>
-                    <th>In Time</th>
-                    <th>Out Time</th>
-                    <th>Hours Worked</th>
-                    <th>Expected Hours</th>
-                    <th>Overtime Hours</th>
-                    <th>Value</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th colspan="6">Total</th>
-                    <th id="totalamount"></th>
-                    <th id="btnPrint"><button onclick="printPage()">Print</button></th>
-                </tr>
-            </tfoot>
-        </table>
+                <thead>
+                    <tr class="thead">
+                        <th>Date</th>
+                        <th>In Time</th>
+                        <th>Out Time</th>
+                        <th>Hours Worked</th>
+                        <th>Overtime Hours</th>
+                        <th>Value</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="5">Total</th>
+                        <th id="totalamount"></th>
+                        <th id="btnPrint"><button onclick="printPage()">Print</button></th>
+                    </tr>
+                </tfoot>
+            </table>
         </section>
     </div>
+    <div class="underneath" onclick="active()"></div>
 </body>
 </html>
+<script>
+    let mainMenuActive = false
+    let mainoverlay = false
+    let menu = document.getElementById('menu_dropdown')
+    let menuDefault = `<img src="/components/icons/menu.png" alt="" onclick="active()">`
+    let menuExit = `<img src="/components/icons/menu.png" alt="" onclick="active()">`
+    function active() {
+        
+        let menu = document.getElementById('menu_dropdown')
+        let a = document.querySelector('.mainMenu')
+        let b = document.querySelector('.underneath')
+        let bodys = document.body
+        mainMenuActive = mainMenuActive === false ? (a.classList.add('mainMenuActive'), b.classList.add('underneathActive'), bodys.classList.add('actives')) || true : (a.classList.remove('mainMenuActive'), b.classList.remove('underneathActive'), bodys.classList.remove('actives')) || false 
+        if(mainoverlay == false) {
+            menu.innerHTML = menuExit
+            mainoverlay = true
+        }
+        else {
+            menu.innerHTML = menuDefault
+            mainoverlay = false
+        }
+    }
+</script>

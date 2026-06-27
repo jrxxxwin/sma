@@ -9,22 +9,32 @@
         }
         .asdasd {
             display: flex;
-
             img {
                 height: 35px;
                 align-self: center;
             }
         }
     }
+    .tabs {
+        z-index: 0;
+    }
     .tabsM {
         display: flex;
+        position: relative;
+        justify-content: space-around;
+
+        .mainMenu {
+            animation: all linear 5s;
+            p, li, summary {
+                font-size: 15px;
+            }
+        }
     }
     .tab.active {
         box-shadow: 0 2px 0 0 #4caf50 ;
     }
     .main {
         padding: 10px;
-
         .payrollSummary {
             grid-template-columns: 1fr;
             grid-template-rows: auto 1fr 1fr;
@@ -37,13 +47,13 @@
                     margin-left: auto;
                 }
             }
-            section:nth-child(3) {
+            .salaryContainer {
                 flex-direction: column;
                 align-items: center;
                 grid-area: 2 / 1 / 2 / 3;
                 
             }
-            section:nth-child(2) {
+            .salaryDetailsSection {
                 gap: 0;
                 display: flex;
                 justify-content: space-evenly;
@@ -67,24 +77,24 @@
             margin-left: 10px;
         }
         .asd {
-            display: flex;
-            flex-direction: column;
             font-size: 12px;
-            padding: 10px;
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            gap: 5px;
-            
-            input {
-                display: grid;
-                width: 80%;
+            gap: 10px;
 
-                text-align: center;
-                height: 20px;
+            .addSectionContainer {
+                width: calc(100% + 10px);
+                grid-template-rows: repeat(2, 1fr);
+                grid-template-columns: repeat(2, 1fr);
+            }
+            input {
+                width: 100%;
+            }
+            #workType {
+                width: 100%;
             }
             button {
                 grid-column: span 2;
+                width: 100%;
             }
         }
         th, td {
@@ -105,6 +115,12 @@
                 }
             }
         }
+    } 
+    .actives {
+        height: 1vh;
+        overflow: hidden;
+    }   
+    #workType {
+        width: 10px;
     }
-    
 }

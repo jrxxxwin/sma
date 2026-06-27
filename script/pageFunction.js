@@ -1,19 +1,3 @@
-let collapseStatus = false;
-function collapse() {
-    const container = document.getElementById('workLogTable')
-    const btn = document.getElementById('dropDown')
-
-    if (collapseStatus == false) {
-        container.style.display = "none"
-        btn.classList.add('flipDrop')
-        collapseStatus = true
-    }
-    else {
-        container.style.display = "table"
-        btn.classList.remove('flipDrop')
-        collapseStatus = false
-    }
-}
 // function SummaryBreakdown() {
 //     const popup = document.createElement('div');
 //     const subsi = JSON.parse(localStorage.getItem('subsidies'))
@@ -72,8 +56,3 @@ function deleteEntry(dateToDelete, monthKey) {
     } else {}
     window.location.reload();
 }
-var open = false
-// function menuDown() {
-//     const headerD = document.getElementById('body')
-//     headerD.classList.toggle('is-open')
-// }
