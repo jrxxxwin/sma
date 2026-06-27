@@ -112,7 +112,7 @@ function renderTable() {
 
         dataArray.forEach(({ indexID, date, timeIN, timeOUT, hrs, workType}) => {
         let nightdiff =  getDecimalNightDiff(timeIN, timeOUT)
-         doublePayNextDay(indexID, timeOUT)
+         // doublePayNextDay(indexID, timeOUT)
         dataArray.sort((a, b) => new Date(a.date) - new Date(b.date));
 
         let hrsworkedFixed = 0
